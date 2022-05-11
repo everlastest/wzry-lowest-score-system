@@ -263,11 +263,11 @@
         created: function () {
             let that = this
             let xhr = new XMLHttpRequest()
-            xhr.open("get", "../herolist.json")
+            xhr.open("get", "https://rank.sapi.run/getHeroList.php")
             xhr.send()
             xhr.onreadystatechange = function () {
                 if (xhr.status === 200 && xhr.readyState === 4) {
-                    that.heroList = JSON.parse(xhr.responseText)
+                    that.heroList = JSON.parse(xhr.responseText).data
                     that.search()
                 }
             }
