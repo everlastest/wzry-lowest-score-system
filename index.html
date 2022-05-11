@@ -121,11 +121,11 @@
             outline: none
         }
 
-        .select_option{
-            color:#000000;
+        .select_option {
+            color: #000000;
         }
 
-        #score_list{
+        #score_list {
             position: absolute;
             top: 320px;
             left: 50%;
@@ -140,27 +140,32 @@
             text-align: center;
             transition: .3s linear;
         }
-        .list{
+
+        .list {
             display: flex;
             height: 50px;
             line-height: 50px;
             font-size: 16px;
         }
-        .list:nth-child(1){
+
+        .list:nth-child(1) {
             font-weight: bold;
         }
-        hr{
+
+        hr {
             margin: 0 40px;
             height: 1px;
             color: #f3c258;
             border: 1px solid #f3c258;
             background-color: #f3c258;
         }
-        .list span{
+
+        .list span {
             flex: 1;
             text-align: center;
         }
-        .score_footer{
+
+        .score_footer {
             font-size: 14px;
             height: 40px;
             line-height: 40px;
@@ -181,8 +186,8 @@
            @mousedown="search"
            @mouseover="color = '#f3c258'"
            @mouseleave="color = '#98989a'"></i>
-        <select size="1"  v-model="type">
-            <option class="select_option"  v-for="(item,index) in options" :value="item.value">{{item.label}}</option>
+        <select size="1" v-model="type">
+            <option class="select_option" v-for="(item,index) in options" :value="item.value">{{item.label}}</option>
         </select>
     </div>
     <div id="skins" @mouseover="changeBackground">
@@ -218,6 +223,7 @@
 
 </div>
 <script>
+    console.log("彩蛋；作者b站小up一枚^_^ UID：479985450 名称：活捉一只小小黑 欢迎关注，多谢~")
     let app = new Vue({
         el: '#app',
         data: {
@@ -302,11 +308,9 @@
                 e.target.parentNode.childNodes[2].style.color = '#f3c258'
             },
             changeInputStyle(index) {
-                if (index === 1)
-                {
+                if (index === 1) {
                     document.getElementById('input').style.borderColor = '#f3c258'
-                }
-                else{
+                } else {
                     document.getElementById('input').style.borderColor = 'transparent'
                 }
             },
@@ -325,7 +329,6 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         let res = JSON.parse(xhr.responseText).data
-                        console.log(res)
                         that.score.areaName = res.area
                         that.score.areaPower = res.areaPower
                         that.score.cityName = res.city
@@ -341,16 +344,13 @@
     let that = app
 
     function process(json) {
-        console.log(that)
         let id = that.heroList[that.id].ename
-        console.log(json)
         that.skinNum = json.iTotalLines
         let map = new Map()
         for (let i = 0; i < that.skinNum; i++) {
             let title = decodeURIComponent(json.List[i].sProdName)
-            title = title.replace(that.heroName, '').replace('壁纸', '').replace(/[^\u4e00-\u9fa5]/g,'')
+            title = title.replace(that.heroName, '').replace('壁纸', '').replace(/[^\u4e00-\u9fa5]/g, '')
             if (map.has(title)) {
-                console.log("有了")
                 that.pictureList.delete(map.get(title))
             } else {
                 map.set(title, i)
