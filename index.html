@@ -348,7 +348,7 @@
         let map = new Map()
         for (let i = 0; i < that.skinNum; i++) {
             let title = decodeURIComponent(json.List[i].sProdName)
-            title = title.replace(that.heroName, '').replace('-', '').replace('壁纸', '').replace('·', '')
+            title = title.replace(that.heroName, '').replace('壁纸', '').replace(/[^\u4e00-\u9fa5]/g,'')
             if (map.has(title)) {
                 console.log("有了")
                 that.pictureList.delete(map.get(title))
