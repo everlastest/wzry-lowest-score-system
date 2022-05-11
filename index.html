@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        body,
+        html,
+        #app {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition-duration: 0.3s;
+            color: white;
+        }
+
+
+        #skins {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .skin {
+            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            height: 110px;
+            text-align: center;
+        }
+
+        .skin:nth-child(1) .avatar {
+            border: 4px solid #f3c258;
+        }
+
+        .skin:nth-child(1) {
+            color: #f3c258;
+        }
+
+
+        .avatar {
+            display: inline-block;
+            border: 4px solid #8d8d8d;
+            box-sizing: border-box;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: transparent;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .title {
+            flex: 1;
+            width: 75px;
+            text-align: center;
+            line-height: 25px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #input {
+            background-color: rgba(32, 32, 35, 0.6);
+            position: absolute;
+            top: 200px;
+            left: 50%;
+            transform: translate(-50%);
+            outline: none;
+            font-size: 16px;
+            padding-left: 20px;
+            height: 50px;
+            width: 500px;
+            border: 2px solid transparent;
+            border-radius: 42px;
+            transition: .6s linear;
+        }
+
+        input {
+            background-color: transparent;
+            outline: none;
+            font-size: 16px;
+            padding: 0;
+            margin-left: 30px;
+            height: 46px;
+            line-height: 46px;
+            width: 300px;
+            color: #fff;
+            border: 0px solid #fff;
+        }
+
+        i {
+            cursor: pointer;
+            position: absolute;
+            color: #fff;
+            background: none;
+            left: 20px;
+            top: 15px;
+            line-height: 50px;
+        }
+
+        select {
+            background-color: transparent;
+            float: right;
+            color: #fff;
+            margin-right: 20px;
+            font-size: 16px;
+            border: 0px;
+            height: 50px;
+            width: 90px;
+            padding: 0;
+            outline: none
+        }
+
+        .select_option{
+            color:#000000;
+        }
+
+        #score_list{
+            position: absolute;
+            top: 320px;
+            left: 50%;
+            padding-top: 10px;
+            transform: translate(-50%);
+            background-color: rgba(32, 32, 35, 0.6);
+            font-size: 16px;
+            color: #fff;
+            height: 250px;
+            width: 400px;
+            border-radius: 8px;
+            text-align: center;
+            transition: .3s linear;
+        }
+        .list{
+            display: flex;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+        }
+        .list:nth-child(1){
+            font-weight: bold;
+        }
+        hr{
+            margin: 0 40px;
+            height: 1px;
+            color: #f3c258;
+            border: 1px solid #f3c258;
+            background-color: #f3c258;
+        }
+        .list span{
+            flex: 1;
+            text-align: center;
+        }
+        .score_footer{
+            font-size: 14px;
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="input">
+        <input type="text"
+               placeholder="请输入你想查询的英雄名..."
+               v-model="heroName"
+               @focus="changeInputStyle(1)"
+               @blur="changeInputStyle(2)"
+               @keyup.enter="search($event)">
+        <i class="el-icon-search"
+           :style="'color:'+color"
+           @mousedown="search"
+           @mouseover="color = '#f3c258'"
+           @mouseleave="color = '#98989a'"></i>
+        <select size="1"  v-model="type">
+            <option class="select_option"  v-for="(item,index) in options" :value="item.value">{{item.label}}</option>
+        </select>
+    </div>
+    <div id="skins" @mouseover="changeBackground">
+        <div class="skin" v-for="(item,index) in pictureList" :key="item.id">
+            <span class="avatar" :style="{backgroundImage:'url('+item.picture+')'}"></span>
+            <span class="title">{{item.title}}</span>
+        </div>
+    </div>
+    <div id="score_list">
+        <div class="list">
+            <span>级别</span>
+            <span>地区名称</span>
+            <span>分数</span>
+        </div>
+        <hr>
+        <div class="list">
+            <span>{{score.province}}</span>
+            <span>{{score.provinceName}}</span>
+            <span>{{score.provincePower}}</span>
+        </div>
+        <div class="list">
+            <span>{{score.city}}</span>
+            <span>{{score.cityName}}</span>
+            <span>{{score.cityPower}}</span>
+        </div>
+        <div class="list">
+            <span>{{score.area}}</span>
+            <span>{{score.areaName}}</span>
+            <span>{{score.areaPower}}</span>
+        </div>
+        <span class="score_footer">更新时间 {{score.updateTime}}</span>
+    </div>
+
+</div>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            pictureList: [],
+            id: '',
+            heroName: '露娜',
+            heroList: [],
+            skinNum: 0,
+            timer: null,
+            color: 'color:#E4E7ED',
+            type: 'aqq',
+            score: {
+                area: '县级',
+                areaName: '城区',
+                areaPower: '1000',
+                city: '市级',
+                cityName: '市区',
+                cityPower: '2000',
+                province: '省级',
+                provinceName: '省份',
+                provincePower: '4000',
+                updateTime: '2020-2-2',
+            },
+            options: [
+                {
+                    value: 'aqq',
+                    label: '安卓QQ'
+                },
+                {
+                    value: 'awx',
+                    label: '安卓微信'
+                },
+                {
+                    value: 'iqq',
+                    label: '苹果QQ'
+                },
+                {
+                    value: 'iwx',
+                    label: '苹果微信'
+                },
+            ]
+        },
+        created: function () {
+            let that = this
+            let xhr = new XMLHttpRequest()
+            xhr.open("get", "../herolist.json")
+            xhr.send()
+            xhr.onreadystatechange = function () {
+                if (xhr.status === 200 && xhr.readyState === 4) {
+                    that.heroList = JSON.parse(xhr.responseText)
+                    that.search()
+                }
+            }
+        },
+        methods: {
+            search(e) {
+                this.id = 0
+                for (let item of this.heroList) {
+                    if (item.cname === this.heroName) {
+                        this.pictureList = []
+                        this.getSkin(this.heroName)
+                        this.getLowestScore()
+                        return
+                    }
+                    this.id++
+                }
+            },
+            changeBackground(e) {
+                if (e.target.tagName !== "SPAN") return
+                let divs = e.currentTarget.childNodes
+                let i = 0
+                for (let div of divs) {
+                    div.childNodes[0].style.borderColor = '#8d8d8d'
+                    div.childNodes[2].style.color = '#fff'
+                    if (e.target.parentNode === div) {
+                        let app = document.getElementById("app")
+                        app.style.backgroundImage = 'url(' + this.pictureList[i].picture + ')'
+                    }
+                    i++
+                }
+                e.target.parentNode.childNodes[0].style.borderColor = '#f3c258'
+                e.target.parentNode.childNodes[2].style.color = '#f3c258'
+            },
+            changeInputStyle(index) {
+                if (index === 1)
+                {
+                    document.getElementById('input').style.borderColor = '#f3c258'
+                }
+                else{
+                    document.getElementById('input').style.borderColor = 'transparent'
+                }
+            },
+            getSkin(hero) {
+                let that = this
+                let script = document.createElement("script");
+                script.src = "https://apps.game.qq.com/cgi-bin/ams/module/ishow/V1.0/query/workList_inc.cgi?activityId=2735&sVerifyCode=ABCD&sDataType=JSON&iListNum=20&totalpage=0&page=0&iOrder=0&SearchKey=sProdName&SearchValue=" + hero + "&iSortNumClose=1&jsoncallback=process&iAMSActivityId=51991&_everyRead=true&iTypeId=2&iFlowId=267733&iActId=2735&iModuleId=2735&_=1652152746146";
+                document.body.appendChild(script);
+                document.body.removeChild(script);
+            },
+            getLowestScore() {
+                let that = this
+                let xhr = new XMLHttpRequest()
+                xhr.open('get', 'https://www.sapi.run/hero/select.php?hero=' + this.heroName + '&type=' + this.type)
+                xhr.send()
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        let res = JSON.parse(xhr.responseText).data
+                        console.log(res)
+                        that.score.areaName = res.area
+                        that.score.areaPower = res.areaPower
+                        that.score.cityName = res.city
+                        that.score.cityPower = res.cityPower
+                        that.score.provinceName = res.province
+                        that.score.provincePower = res.provincePower
+                        that.score.updateTime = res.updatetime
+                    }
+                }
+            }
+        }
+    })
+    let that = app
+
+    function process(json) {
+        console.log(that)
+        let id = that.heroList[that.id].ename
+        console.log(json)
+        that.skinNum = json.iTotalLines
+        let map = new Map()
+        for (let i = 0; i < that.skinNum; i++) {
+            let title = decodeURIComponent(json.List[i].sProdName)
+            title = title.replace(that.heroName, '').replace('-', '').replace('壁纸', '').replace('·', '')
+            if (map.has(title)) {
+                console.log("有了")
+                that.pictureList.delete(map.get(title))
+            } else {
+                map.set(title, i)
+            }
+            let picture = decodeURIComponent(json.List[i].sProdImgNo_6)
+            picture = picture.substring(0, picture.length - 3) + '0'
+            that.pictureList.push({
+                id: i,
+                title: title,
+                picture: picture
+            })
+        }
+        document.getElementById("app").style.backgroundImage = 'url(' + that.pictureList[0].picture + ')'
+
+    }
+
+</script>
+</body>
+</html>
