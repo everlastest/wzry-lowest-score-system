@@ -185,7 +185,7 @@
            :style="'color:'+color"
            @mousedown="search"
            @mouseover="color = '#f3c258'"
-           @mouseleave="color = '#98989a'"></i>
+           @mouseleave="color = '#fff'"></i>
         <select size="1" v-model="type">
             <option class="select_option" v-for="(item,index) in options" :value="item.value">{{item.label}}</option>
         </select>
