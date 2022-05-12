@@ -9,7 +9,7 @@
         body,
         html,
         #app {
-            position: fixed;
+            position: relative;
             margin: 0;
             width: 100%;
             height: 100%;
@@ -25,8 +25,8 @@
         #skins {
             width: 100%;
             font-size: 13px;
-            bottom:0px;
-            position: fixed;
+            bottom: 0px;
+            position: absolute;
             display: flex;
             justify-content: center;
             flex-wrap: nowrap;
@@ -191,31 +191,36 @@
                 background-repeat: no-repeat;
                 background-size: cover;
             }
+
             .skin:nth-child(1) .avatar {
                 border: 3px solid #f3c258;
             }
-            .title{
+
+            .title {
                 font-size: 12px;
                 width: 70px;
             }
         }
 
-        @media screen  and (min-device-width: 240px) and (max-device-width: 480px){
+        @media screen  and (min-device-width: 240px) and (max-device-width: 480px) {
             #app {
                 font-size: 28px;
             }
+
             #input {
                 top: 15%;
                 height: 100px;
                 width: 80%;
             }
-            input{
+
+            input {
                 font-size: 28px;
                 margin-left: 60px;
                 height: 100px;
                 line-height: 100px;
                 width: 400px;
             }
+
             i {
                 font-size: 28px;
                 left: 30px;
@@ -236,13 +241,16 @@
                 height: 440px;
                 width: 70%;
             }
-            .score_footer{
+
+            .score_footer {
                 font-size: 26px;
             }
-            .list{
+
+            .list {
                 height: 90px;
                 line-height: 90px;
             }
+
             #skins {
                 width: 80%;
                 margin-left: 10%;
@@ -250,6 +258,7 @@
                 font-size: 14px;
                 flex-wrap: wrap;
             }
+
             .avatar {
                 border: 5px solid #8d8d8d;
                 margin-left: 5px;
@@ -261,10 +270,12 @@
                 background-repeat: no-repeat;
                 background-size: cover;
             }
+
             .skin:nth-child(1) .avatar {
                 border: 5px solid #f3c258;
             }
-            .title{
+
+            .title {
                 font-weight: normal;
                 font-size: 24px;
                 width: 120px;
@@ -327,6 +338,7 @@
     let app = new Vue({
         el: '#app',
         data: {
+            initialHeight: '',
             pictureList: [],
             id: '',
             heroName: '露娜',
@@ -367,6 +379,8 @@
             ]
         },
         created: function () {
+            this.initialHeight = window.innerHeight
+            console.log(this.initialHeight)
             let that = this
             let xhr = new XMLHttpRequest()
             xhr.open("get", "https://rank.sapi.run/getHeroList.php")
@@ -377,6 +391,11 @@
                     that.search()
                 }
             }
+
+        },
+        mounted: function () {
+            let app = document.getElementById("app")
+            app.style.minHeight = this.initialHeight+'px'
         },
         methods: {
             search(e) {
@@ -459,7 +478,7 @@
             let title = decodeURIComponent(json.List[i].sProdName)
             title = title.replace(that.heroName, '').replace('壁纸', '').replace(/[^\u4e00-\u9fa5]/g, '')
             if (map.has(title)) {
-                that.pictureList.splice(map.get(title),1)
+                that.pictureList.splice(map.get(title), 1)
             } else {
                 map.set(title, i)
             }
