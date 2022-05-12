@@ -459,7 +459,7 @@
             let title = decodeURIComponent(json.List[i].sProdName)
             title = title.replace(that.heroName, '').replace('壁纸', '').replace(/[^\u4e00-\u9fa5]/g, '')
             if (map.has(title)) {
-                that.pictureList.delete(map.get(title))
+                that.pictureList.splice(map.get(title),1)
             } else {
                 map.set(title, i)
             }
