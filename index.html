@@ -378,6 +378,10 @@
                 }
             }
         },
+        mounted: function () {
+            let app = document.getElementById("app")
+            app.style.minHeight = this.initialHeight+'px'
+        },
         methods: {
             search(e) {
                 console.log(this.timer)
