@@ -18,105 +18,189 @@
             background-repeat: no-repeat;
             background-size: cover;
             transition-duration: 0.3s;
+            font-size: 14px;
             color: white;
         }
 
-        @media (min-width: 1200px) {
-            #app {
-                font-size: 16px;
-            }
+        #skins {
+            width: 100%;
+            font-size: 13px;
+            bottom:0px;
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
 
-            #input {
-                top: 20%;
-                height: 50px;
-                width: 500px;
-            }
-            input {
-                padding: 0;
-                margin-left: 30px;
-                height: 46px;
-                line-height: 46px;
-                width: 300px;
-            }
-            #score_list {
-                border-radius: 8px;
-                top: 35%;
-                height: 250px;
-                width: 400px;
-            }
-            .list{
-                height: 50px;
-                line-height: 50px;
-            }
-            i {
-                left: 20px;
-                top: 15px;
-                line-height: 50px;
-            }
-            select {
-                margin-right: 20px;
-                height: 50px;
-                width: 90px;
-                padding: 0;
-            }
+        .skin {
+            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
 
-            #skins {
-                font-size: 14px;
-                bottom:0px
-            }
+        .skin:nth-child(1) .avatar {
+            border: 4px solid #f3c258;
+        }
+
+        .skin:nth-child(1) {
+            color: #f3c258;
+        }
+
+
+        .avatar {
+            display: inline-block;
+            border: 4px solid #8d8d8d;
+            box-sizing: border-box;
+            margin-left: 2px;
+            width: 67px;
+            height: 67px;
+            border-radius: 50%;
+            background-color: transparent;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .title {
+            flex: 1;
+            width: 75px;
+            text-align: center;
+            line-height: 25px;
+            font-weight: bold;
+        }
+
+        #input {
+            top: 20%;
+            height: 45px;
+            width: 450px;
+            background-color: rgba(32, 32, 35, 0.6);
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            outline: none;
+            padding-left: 20px;
+            border: 2px solid transparent;
+            border-radius: 100px;
+            transition: .6s linear;
+        }
+
+        input {
+            padding: 0;
+            margin-left: 30px;
+            height: 45px;
+            line-height: 45px;
+            width: 270px;
+            background-color: transparent;
+            outline: none;
+            padding: 0;
+            color: #fff;
+            border: 0px solid #fff;
+        }
+
+        i {
+            left: 20px;
+            top: 15px;
+            line-height: 45px;
+            cursor: pointer;
+            position: absolute;
+            color: #fff;
+            background: none;
+        }
+
+        select {
+            margin-right: 20px;
+            height: 45px;
+            width: 80px;
+            padding: 0;
+            background-color: transparent;
+            float: right;
+            color: #fff;
+            border: 0px;
+            outline: none
+        }
+
+        .select_option {
+            color: #000000;
+        }
+
+        #score_list {
+            border-radius: 8px;
+            top: 35%;
+            height: 225px;
+            width: 360px;
+            position: absolute;
+            left: 50%;
+            padding-top: 5px;
+            transform: translate(-50%);
+            background-color: rgba(32, 32, 35, 0.6);
+            color: #fff;
+            text-align: center;
+            transition: .3s linear;
+        }
+
+        .list {
+            height: 45px;
+            line-height: 45px;
+            display: flex;
+        }
+
+        .list:nth-child(1) {
+            font-weight: bold;
+        }
+
+        hr {
+            margin: 0 40px;
+            height: 1px;
+            color: #f3c258;
+            border: 1px solid #f3c258;
+            background-color: #f3c258;
+        }
+
+        .list span {
+            flex: 1;
+            text-align: center;
+        }
+
+        .score_footer {
+            font-size: 13px;
+            height: 36px;
+            line-height: 36px;
         }
 
         @media (min-width: 500px) and (max-width: 1200px) {
 
-            #app {
-                font-size: 16px;
-            }
-
             #input {
                 top: 15%;
-                height: 50px;
-                width: 500px;
             }
 
-            input {
-                padding: 0;
-                margin-left: 30px;
-                height: 46px;
-                line-height: 46px;
-                width: 300px;
-            }
-
-            i {
-                left: 20px;
-                top: 15px;
-                line-height: 50px;
-            }
-
-            select {
-                margin-right: 20px;
-                height: 50px;
-                width: 90px;
-                padding: 0;
-            }
 
             #score_list {
                 border-radius: 8px;
                 top: 30%;
-                height: 250px;
-                width: 400px;
             }
-            .list{
-                height: 50px;
-                line-height: 50px;
-            }
-            #skins {
-                bottom: 0px;
-                font-size: 14px;
 
+            .avatar {
+                border: 3px solid #8d8d8d;
+                margin-left: 5px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background-color: transparent;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .skin:nth-child(1) .avatar {
+                border: 3px solid #f3c258;
+            }
+            .title{
+                font-size: 12px;
+                width: 70px;
             }
         }
 
-        @media screen and (min-device-width: 240px) and (max-device-width: 480px) {
+        @media screen  and (min-device-width: 240px) and (max-device-width: 480px){
             #app {
                 font-size: 28px;
             }
@@ -152,137 +236,39 @@
                 height: 440px;
                 width: 70%;
             }
+            .score_footer{
+                font-size: 26px;
+            }
             .list{
                 height: 90px;
                 line-height: 90px;
             }
             #skins {
+                width: 80%;
+                margin-left: 10%;
                 bottom: 100px;
                 font-size: 14px;
-
+                flex-wrap: wrap;
             }
-        }
-
-        #skins {
-            width: 100%;
-            position: fixed;
-            display: flex;
-            justify-content: center;
-            flex-wrap: nowrap;
-        }
-
-        .skin {
-            margin: 5px;
-            display: flex;
-            flex-direction: column;
-            height: 110px;
-            text-align: center;
-        }
-
-        .skin:nth-child(1) .avatar {
-            border: 4px solid #f3c258;
-        }
-
-        .skin:nth-child(1) {
-            color: #f3c258;
-        }
-
-
-        .avatar {
-            display: inline-block;
-            border: 4px solid #8d8d8d;
-            box-sizing: border-box;
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            background-color: transparent;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        .title {
-            flex: 1;
-            width: 75px;
-            text-align: center;
-            line-height: 25px;
-            font-weight: bold;
-        }
-
-        #input {
-            background-color: rgba(32, 32, 35, 0.6);
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%);
-            outline: none;
-            padding-left: 20px;
-            border: 2px solid transparent;
-            border-radius: 100px;
-            transition: .6s linear;
-        }
-
-        input {
-            background-color: transparent;
-            outline: none;
-            padding: 0;
-            color: #fff;
-            border: 0px solid #fff;
-        }
-
-        i {
-            cursor: pointer;
-            position: absolute;
-            color: #fff;
-            background: none;
-        }
-
-        select {
-            background-color: transparent;
-            float: right;
-            color: #fff;
-            border: 0px;
-            outline: none
-        }
-
-        .select_option {
-            color: #000000;
-        }
-
-        #score_list {
-            position: absolute;
-            left: 50%;
-            padding-top: 10px;
-            transform: translate(-50%);
-            background-color: rgba(32, 32, 35, 0.6);
-            color: #fff;
-            text-align: center;
-            transition: .3s linear;
-        }
-
-        .list {
-            display: flex;
-        }
-
-        .list:nth-child(1) {
-            font-weight: bold;
-        }
-
-        hr {
-            margin: 0 40px;
-            height: 1px;
-            color: #f3c258;
-            border: 1px solid #f3c258;
-            background-color: #f3c258;
-        }
-
-        .list span {
-            flex: 1;
-            text-align: center;
-        }
-
-        .score_footer {
-            height: 40px;
-            line-height: 40px;
+            .avatar {
+                border: 5px solid #8d8d8d;
+                margin-left: 5px;
+                width: 110px;
+                height: 110px;
+                border-radius: 50%;
+                background-color: transparent;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .skin:nth-child(1) .avatar {
+                border: 5px solid #f3c258;
+            }
+            .title{
+                font-weight: normal;
+                font-size: 24px;
+                width: 120px;
+            }
         }
     </style>
 </head>
