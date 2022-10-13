@@ -367,16 +367,8 @@
             ]
         },
         created: function () {
-            let that = this
-            let xhr = new XMLHttpRequest()
-            xhr.open("get", "https://rank.sapi.run/getHeroList.php")
-            xhr.send()
-            xhr.onreadystatechange = function () {
-                if (xhr.status === 200 && xhr.readyState === 4) {
-                    that.heroList = JSON.parse(xhr.responseText).data
-                    that.search()
-                }
-            }
+            this.initialHeight = window.innerHeight
+            this.search()
         },
         mounted: function () {
             let app = document.getElementById("app")
@@ -393,16 +385,7 @@
                     this.timer = null
                 }, 2000)
                 this.id = 0
-                for (let item of this.heroList) {
-                    if (item.cname === this.heroName) {
-                        this.pictureList = []
-                        this.getSkin(this.heroName)
-                        this.getLowestScore()
-                        return
-                    }
-                    this.id++
-                }
-                alert("未找到此英雄，请确认英雄名称~")
+                this.getLowestScore()
             },
             changeBackground(e) {
                 if (e.target.tagName !== "SPAN") return
@@ -437,7 +420,7 @@
             getLowestScore() {
                 let that = this
                 let xhr = new XMLHttpRequest()
-                xhr.open('get', 'https://www.sapi.run/hero/select.php?hero=' + this.heroName + '&type=' + this.type)
+                xhr.open('get', `https://www.sapi.run/hero/select.php?hero=${this.heroName}&type=${this.type}`)
                 xhr.send()
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -449,6 +432,11 @@
                         that.score.provinceName = res.province
                         that.score.provincePower = res.provincePower
                         that.score.updateTime = res.updatetime
+                        that.pictureList = []
+                        that.getSkin(that.heroName)
+                    }
+                    if(xhr.readyState === 4 && xhr.status !== 200){
+                        alert('查无此英雄~')
                     }
                 }
             }
@@ -457,7 +445,7 @@
     let that = app
 
     function process(json) {
-        let id = that.heroList[that.id].ename
+        //let id = that.heroList[that.id].ename
         that.skinNum = json.iTotalLines
         let map = new Map()
         for (let i = 0; i < that.skinNum; i++) {
