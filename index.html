@@ -424,6 +424,10 @@
                 xhr.send()
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
+                        if(xhr.responseText.code!==200){
+                            alert('查无此英雄~')
+                            return;
+                        }
                         let res = JSON.parse(xhr.responseText).data
                         that.score.areaName = res.area
                         that.score.areaPower = res.areaPower
@@ -434,9 +438,6 @@
                         that.score.updateTime = res.updatetime
                         that.pictureList = []
                         that.getSkin(that.heroName)
-                    }
-                    if(xhr.readyState === 4 && xhr.status !== 200){
-                        alert('查无此英雄~')
                     }
                 }
             }
