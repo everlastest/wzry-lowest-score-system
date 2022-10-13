@@ -435,7 +435,7 @@
                 xhr.send()
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        if(xhr.responseText.code!==200){
+                        if(JSON.parse(xhr.responseText).code!==200){
                             alert('查无此英雄~')
                             return;
                         }
